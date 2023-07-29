@@ -7,13 +7,12 @@ from uvicorn import run
 import multiprocessing
 from fastapi.middleware.cors import CORSMiddleware
 
-ipaddr = "192.168.1.4"
-
-
+ipaddr_timescale = "timescaleDB"
+ipaddr = "mosquitto"
 
 
 DATABASE_URL = "postgres://{user}:{password}@{hosturl}:{port}".format(
-    user="postgres", password="password", hosturl=ipaddr, port=5432
+    user="postgres", password="password", hosturl=ipaddr_timescale, port=5432
 )
 
 app=FastAPI()

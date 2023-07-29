@@ -47,13 +47,13 @@ services:
       - backend
     ports:
       - 0.0.0.0:3000:3000
-  # python:
-  #   container_name: python
-  #   build: ./Bananapi-server
-  #   networks:
-  #     - backend
-  #   ports:
-  #     - "8080:8080"
+  python:
+    container_name: python
+    build: ./server
+    networks:
+      - backend
+    ports:
+      - "8080:8080"
 volumes:
   timescale_vol:
   grafana:
