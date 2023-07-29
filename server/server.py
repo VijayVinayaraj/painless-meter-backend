@@ -6,21 +6,27 @@ from fastapi import FastAPI
 from uvicorn import run
 import multiprocessing
 from fastapi.middleware.cors import CORSMiddleware
+
+ipaddr = "192.168.1.4"
+
+
+
+
 DATABASE_URL = "postgres://{user}:{password}@{hosturl}:{port}".format(
-    user="postgres", password="password", hosturl="192.168.224.229", port=5432
+    user="postgres", password="password", hosturl=ipaddr, port=5432
 )
 
 app=FastAPI()
 
-consumer1 = "painlessMesh/from/3821661665"
-consumer2 ="painlessMesh/from/1375526329"
-consumer3 = "painlessMesh/from/1375462669"
-consumer4 =""
+consumer1 = "painlessMesh/from/4147197365"
+consumer2 ="painlessMesh/from/533222525"
+consumer3 = "painlessMesh/from/1701066717"
+consumer4 ="painlessMesh/from/3821677349"
 
-consumer1pub ="painlessMesh/to/3821661665"
-consumer2pub ="painlessMesh/to/1375526329"
-consumer3pub ="painlessMesh/to/1375462669"
-consumer4pub ="painlessMesh/to/3821661665"
+consumer1pub ="painlessMesh/to/4147197365"
+consumer2pub ="painlessMesh/to/533222525"
+consumer3pub ="painlessMesh/to/1701066717"
+consumer4pub ="painlessMesh/to/3821677349"
 
 
 
@@ -82,7 +88,7 @@ def on_subscribe(mqttc, obj, mid, granted_qos):
     print("Subscribed: "+str(mid)+" "+str(granted_qos))
 def on_disconnect(mqttc,obj,rc):
     print("discoonected reconnecting")
-    mqttc.connect('localhost', 1883, 6)
+    mqttc.connect(ipaddr, 1883, 6)
 
 
 mqttc = mqtt.Client("database")
@@ -93,7 +99,7 @@ mqttc.on_subscribe = on_subscribe
 mqttc.on_disconnect = on_disconnect
 
 # mqttc.connect('mosquitto-docker', 9001, 60)
-mqttc.connect('192.168.224.229', 1883, 60)
+mqttc.connect(ipaddr, 1883, 60)
 print(f'trying to connect.....')
 
 
@@ -127,7 +133,7 @@ def subscribeToALL(mqtt):
     mqtt.subscribe(consumer1)
     mqtt.subscribe(consumer2)
     mqtt.subscribe(consumer3)
-    # mqtt.subscribe(consumer4)
+    mqtt.subscribe(consumer4)
 
 def getDatafrombroker(msg):
     topic = msg.topic
